@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anthropic Economic Index 분석 리포트</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap/dist/css/jsvectormap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/jsvectormap"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsvectormap/dist/maps/world.js"></script>
     <style>
         :root {
             --bg: #f7f5f2;
@@ -385,10 +388,45 @@
             color: var(--text);
         }
 
+        /* World Map */
+        #worldMap {
+            width: 100%;
+            height: 420px;
+        }
+
+        .jvm-tooltip {
+            background: #1a1a1a !important;
+            color: #fff !important;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif !important;
+            font-size: 0.85rem !important;
+            padding: 8px 12px !important;
+            border-radius: 8px !important;
+            border: none !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+        }
+
+        .map-legend {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 16px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            justify-content: center;
+        }
+
+        .map-legend-bar {
+            width: 200px;
+            height: 10px;
+            border-radius: 5px;
+            background: linear-gradient(90deg, #f0ede8, #d4886c, #c96442, #8b3a20);
+        }
+
         @media (max-width: 500px) {
             .chart-grid { grid-template-columns: 1fr; }
             .kpi-grid { grid-template-columns: repeat(2, 1fr); }
             .tabs { flex-wrap: wrap; }
+            #worldMap { height: 280px; }
         }
     </style>
 </head>
@@ -723,6 +761,17 @@
     <h2 class="section-title">국가별 사용 현황 (Claude AI)</h2>
     <p class="section-desc">Claude AI 대화의 국가별 분포 (상위 15개국)</p>
 
+    <div class="chart-card full" style="margin-bottom:24px;">
+        <h3>세계 지도 — 국가별 사용 비율</h3>
+        <p class="chart-desc">색이 진할수록 사용 비율이 높은 국가입니다</p>
+        <div id="worldMap"></div>
+        <div class="map-legend">
+            <span>낮음</span>
+            <div class="map-legend-bar"></div>
+            <span>높음</span>
+        </div>
+    </div>
+
     <div class="chart-grid">
         <div class="chart-card">
             <h3>상위 15개국 사용 비율</h3>
@@ -733,6 +782,22 @@
             <h3>지역별 분포</h3>
             <p class="chart-desc">미국 외 Top 14 국가의 비율 시각화</p>
             <div class="chart-wrap" style="flex:1; max-height:400px; display:flex; align-items:center; justify-content:center;"><canvas id="chartCountryPie"></canvas></div>
+        </div>
+    </div>
+
+    <!-- ==================== PER CAPITA ==================== -->
+    <div class="chart-card full" style="margin-top:24px; margin-bottom:30px;">
+        <h3>인구 10만명당 Claude AI 대화 수 (1주간)</h3>
+        <p class="chart-desc">단순 사용 비율이 아닌, 각 국가의 인구를 고려한 실질 사용 밀도 비교 (세이셸 제외)</p>
+        <div class="chart-wrap bar-chart" style="height:520px;"><canvas id="chartPerCapita"></canvas></div>
+
+        <div class="insight" style="margin-top:16px;">
+            <strong>계산 방식:</strong><br>
+            ① 국가별 대화 수 = 전체 대화 수(999,875건) × 해당 국가 비율(%)<br>
+            ② 인구 10만명당 대화 수 = 국가별 대화 수 ÷ 해당 국가 인구 × 100,000<br><br>
+            <strong>예시 (미국):</strong> 999,875 × 21.97% = 219,733건 → 219,733 ÷ 334,000,000 × 100,000 = <strong>65.8건</strong><br>
+            <strong>예시 (한국):</strong> 999,875 × 3.06% = 30,596건 → 30,596 ÷ 51,700,000 × 100,000 = <strong>59.2건</strong><br><br>
+            <strong>참고:</strong> 인구 데이터는 2024년 추정치 기준입니다. 세이셸(인구 약 10만명)은 인구 10만명당 약 24,697건으로 극단적 이상치여서 차트에서 제외했습니다. 이는 VPN 사용 등의 영향으로 추정됩니다.
         </div>
     </div>
 
@@ -1388,6 +1453,129 @@ new Chart(document.getElementById('chartHumanAbility'), {
             x: { stacked: true, grid: { display: false } }
         }
     }
+});
+
+// ---- Per Capita Chart ----
+const totalConversations = 999875;
+const countryPop = {
+    US: 334000000, IN: 1440000000, JP: 123000000, GB: 68000000,
+    KR: 51700000, FR: 68000000, BR: 216000000, DE: 84000000,
+    ID: 277000000, CA: 40000000, IT: 59000000, AU: 26500000, ES: 48000000
+};
+const countryPct = {
+    US: 21.97, IN: 5.81, JP: 3.12, GB: 3.07, KR: 3.06,
+    FR: 3.02, BR: 2.76, DE: 2.54, ID: 2.51, CA: 2.29,
+    IT: 1.63, AU: 1.55, ES: 1.41
+};
+const countryLabels = {
+    US: '미국', IN: '인도', JP: '일본', GB: '영국', KR: '한국',
+    FR: '프랑스', BR: '브라질', DE: '독일', ID: '인도네시아',
+    CA: '캐나다', IT: '이탈리아', AU: '호주', ES: '스페인'
+};
+
+const perCapitaData = Object.entries(countryPct).map(([code, pct]) => {
+    const convos = totalConversations * pct / 100;
+    const perCapita = convos / countryPop[code] * 100000;
+    return { code, label: countryLabels[code], value: Math.round(perCapita * 10) / 10 };
+}).sort((a, b) => b.value - a.value);
+
+new Chart(document.getElementById('chartPerCapita'), {
+    type: 'bar',
+    data: {
+        labels: perCapitaData.map(d => d.label),
+        datasets: [{
+            data: perCapitaData.map(d => d.value),
+            backgroundColor: perCapitaData.map((d, i) => {
+                const t = d.value / perCapitaData[0].value;
+                const r = Math.round(240 - t * (240 - 139));
+                const g = Math.round(237 - t * (237 - 58));
+                const b = Math.round(232 - t * (232 - 32));
+                return `rgb(${r},${g},${b})`;
+            }),
+            borderRadius: 4,
+            borderSkipped: false
+        }]
+    },
+    options: {
+        responsive: true,
+        indexAxis: 'y',
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    label: ctx => `인구 10만명당 ${ctx.parsed.x}건`
+                }
+            }
+        },
+        scales: {
+            x: { beginAtZero: true, ticks: { callback: v => v + '건' }, grid: { color: 'rgba(0,0,0,0.06)' } },
+            y: { grid: { display: false }, ticks: { font: { size: 13 } } }
+        }
+    }
+});
+
+// ---- World Map ----
+const mapData = {
+    US: 21.97, IN: 5.81, JP: 3.12, GB: 3.07, KR: 3.06,
+    FR: 3.02, BR: 2.76, DE: 2.54, ID: 2.51, SC: 2.47,
+    CA: 2.29, IT: 1.63, AU: 1.55, ES: 1.41
+};
+
+const countryNames = {
+    US: '미국', IN: '인도', JP: '일본', GB: '영국', KR: '한국',
+    FR: '프랑스', BR: '브라질', DE: '독일', ID: '인도네시아', SC: '세이셸',
+    CA: '캐나다', IT: '이탈리아', AU: '호주', ES: '스페인'
+};
+
+// 비율에 따라 색상을 보간하는 함수
+function lerpColor(a, b, t) {
+    const ah = parseInt(a.slice(1), 16);
+    const bh = parseInt(b.slice(1), 16);
+    const ar = (ah >> 16) & 0xff, ag = (ah >> 8) & 0xff, ab = ah & 0xff;
+    const br = (bh >> 16) & 0xff, bg = (bh >> 8) & 0xff, bb = bh & 0xff;
+    const rr = Math.round(ar + (br - ar) * t);
+    const rg = Math.round(ag + (bg - ag) * t);
+    const rb = Math.round(ab + (bb - ab) * t);
+    return '#' + ((1 << 24) + (rr << 16) + (rg << 8) + rb).toString(16).slice(1);
+}
+
+const maxVal = 22;
+const colorLight = '#f0ede8';
+const colorDark = '#8b3a20';
+new jsVectorMap({
+    selector: '#worldMap',
+    map: 'world',
+    backgroundColor: 'transparent',
+    regionStyle: {
+        initial: {
+            fill: '#e8e4de',
+            stroke: '#d0ccc4',
+            strokeWidth: 0.4
+        },
+        hover: {
+            fillOpacity: 0.8
+        }
+    },
+    showTooltip: true,
+    onRegionTooltipShow(_, tooltip, code) {
+        const pct = mapData[code];
+        const name = countryNames[code];
+        if (pct) {
+            tooltip.text(`${name}: ${pct}%`);
+        }
+    },
+    onLoaded(map) {
+        Object.entries(mapData).forEach(([code, val]) => {
+            const t = Math.pow(val / maxVal, 0.6);
+            const color = lerpColor(colorLight, colorDark, t);
+            const el = document.querySelector('#worldMap path[data-code="' + code + '"]');
+            if (el) {
+                el.style.fill = color;
+            }
+        });
+    },
+    zoomButtons: false
 });
 
 // Tab switching
