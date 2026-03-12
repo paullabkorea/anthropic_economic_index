@@ -7,19 +7,19 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <style>
         :root {
-            --bg: #0a0a0f;
-            --surface: #13131a;
-            --surface2: #1a1a24;
-            --border: #2a2a3a;
-            --text: #e4e4ef;
-            --text-muted: #8888a0;
-            --accent: #6366f1;
-            --accent2: #8b5cf6;
-            --accent3: #ec4899;
-            --green: #22c55e;
-            --amber: #f59e0b;
-            --red: #ef4444;
-            --cyan: #06b6d4;
+            --bg: #f7f5f2;
+            --surface: #ffffff;
+            --surface2: #f0ede8;
+            --border: #e0ddd7;
+            --text: #1a1a1a;
+            --text-muted: #6b6560;
+            --accent: #c96442;
+            --accent2: #b8533a;
+            --accent3: #d4886c;
+            --green: #2e8b57;
+            --amber: #c68a1d;
+            --red: #c44040;
+            --cyan: #3a7ca5;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,7 +32,7 @@
         }
 
         .hero {
-            background: linear-gradient(135deg, #1a103a 0%, #0d1b2a 50%, #0a192f 100%);
+            background: #ffffff;
             border-bottom: 1px solid var(--border);
             padding: 60px 20px 50px;
             text-align: center;
@@ -44,8 +44,8 @@
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(ellipse at 30% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 60%),
-                        radial-gradient(ellipse at 70% 50%, rgba(139, 92, 246, 0.06) 0%, transparent 60%);
+            background: radial-gradient(ellipse at 30% 50%, rgba(201, 100, 66, 0.05) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 50%, rgba(184, 83, 58, 0.03) 0%, transparent 60%);
         }
 
         .hero > * { position: relative; z-index: 1; }
@@ -53,10 +53,7 @@
         .hero h1 {
             font-size: clamp(1.8rem, 4vw, 2.8rem);
             font-weight: 700;
-            background: linear-gradient(135deg, #c4b5fd, #818cf8, #6366f1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #1a1a1a;
             margin-bottom: 12px;
         }
 
@@ -69,12 +66,12 @@
 
         .hero .period {
             display: inline-block;
-            background: rgba(99, 102, 241, 0.15);
-            border: 1px solid rgba(99, 102, 241, 0.3);
+            background: rgba(201, 100, 66, 0.08);
+            border: 1px solid rgba(201, 100, 66, 0.25);
             border-radius: 20px;
             padding: 6px 18px;
             font-size: 0.9rem;
-            color: #a5b4fc;
+            color: var(--accent);
         }
 
         .container {
@@ -84,17 +81,17 @@
         }
 
         .disclaimer {
-            background: rgba(245, 158, 11, 0.08);
-            border: 1px solid rgba(245, 158, 11, 0.25);
+            background: #fdf6ee;
+            border: 1px solid #e8d5b8;
             border-radius: 12px;
             padding: 16px 20px;
             margin-bottom: 30px;
             font-size: 0.88rem;
-            color: #fbbf24;
+            color: #8a6914;
             line-height: 1.7;
         }
 
-        .disclaimer strong { color: #fcd34d; }
+        .disclaimer strong { color: #7a5c0f; }
 
         .section-title {
             font-size: 1.5rem;
@@ -213,7 +210,7 @@
         }
 
         .compare-table tr:hover td {
-            background: rgba(99, 102, 241, 0.04);
+            background: rgba(201, 100, 66, 0.04);
         }
 
         .compare-table .highlight {
@@ -230,13 +227,13 @@
         }
 
         .platform-badge.claude {
-            background: rgba(99, 102, 241, 0.15);
-            color: #a5b4fc;
+            background: rgba(201, 100, 66, 0.12);
+            color: #b8533a;
         }
 
         .platform-badge.api {
-            background: rgba(6, 182, 212, 0.15);
-            color: #67e8f9;
+            background: rgba(58, 124, 165, 0.12);
+            color: #2d6a8a;
         }
 
         /* Rank list */
@@ -270,9 +267,9 @@
             color: var(--accent);
         }
 
-        .rank-num.gold { background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.3); color: #fbbf24; }
-        .rank-num.silver { background: rgba(148, 163, 184, 0.15); border-color: rgba(148, 163, 184, 0.3); color: #94a3b8; }
-        .rank-num.bronze { background: rgba(217, 119, 6, 0.15); border-color: rgba(217, 119, 6, 0.3); color: #d97706; }
+        .rank-num.gold { background: #fef3e2; border-color: #e8c87a; color: #a67c1a; }
+        .rank-num.silver { background: #f0ede8; border-color: #c5c0b8; color: #6b6560; }
+        .rank-num.bronze { background: #fbeee4; border-color: #d4a87a; color: #9a6a2f; }
 
         .rank-bar {
             flex: 1;
@@ -296,7 +293,7 @@
         .rank-bar .bar-fill {
             height: 100%;
             border-radius: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            background: linear-gradient(90deg, var(--accent), var(--accent3));
         }
 
         .rank-pct {
@@ -310,17 +307,17 @@
 
         /* Insight box */
         .insight {
-            background: rgba(99, 102, 241, 0.06);
-            border: 1px solid rgba(99, 102, 241, 0.2);
+            background: #faf5f0;
+            border: 1px solid #e0d5c8;
             border-radius: 10px;
             padding: 16px 20px;
             margin-top: 16px;
             font-size: 0.88rem;
-            color: #c4b5fd;
+            color: #5a4a3a;
             line-height: 1.7;
         }
 
-        .insight strong { color: #ddd6fe; }
+        .insight strong { color: #3a2a1a; }
 
         /* Tabs */
         .tabs {
@@ -406,15 +403,14 @@
 <div class="container">
 
     <div class="disclaimer">
-        <strong>면책 조항 (Disclaimer)</strong><br>
-        본 페이지는 Anthropic이 공개한 <a href="https://www.anthropic.com/economic-index" target="_blank" style="color:#fcd34d;">Anthropic Economic Index</a>의 원시 데이터를 기반으로 <strong>위니브(Weniv) 대표 이호준</strong>이 독자적으로 분석 및 시각화한 것입니다.
+        본 페이지는 Anthropic이 공개한 <a href="https://www.anthropic.com/economic-index" target="_blank" style="color:#7a5c0f; text-decoration:underline;">Anthropic Economic Index</a>의 원시 데이터를 기반으로 <strong>위니브(Weniv) 대표 이호준</strong>이 독자적으로 분석 및 시각화한 것입니다.
         <strong>본 분석은 잘못된 해석이 포함되어 있을 수 있으며</strong>, Anthropic의 공식 분석과 다를 수 있습니다.
-        정확한 정보는 반드시 <a href="https://www.anthropic.com/economic-index" target="_blank" style="color:#fcd34d;">원본 리포트</a>를 참고해 주세요.
+        정확한 정보는 반드시 <a href="https://www.anthropic.com/economic-index" target="_blank" style="color:#7a5c0f; text-decoration:underline;">원본 리포트</a>를 참고해 주세요.
     </div>
 
     <!-- ==================== OVERVIEW ==================== -->
     <h2 class="section-title">Overview</h2>
-    <p class="section-desc">Claude AI(소비자용)와 1P API(개발자용), 두 플랫폼의 핵심 지표 요약</p>
+    <p class="section-desc">일반 사용자용(Claude AI)과 개발자용(API), 두 플랫폼의 핵심 지표 요약</p>
 
     <div class="kpi-grid">
         <div class="kpi-card">
@@ -423,9 +419,9 @@
             <div class="sub">Free & Pro 사용자</div>
         </div>
         <div class="kpi-card cyan">
-            <div class="label">1P API 요청 수</div>
+            <div class="label">개발자 API 요청 수</div>
             <div class="value">971,525</div>
-            <div class="sub">개발자 API 호출</div>
+            <div class="sub">개발자용 API 호출</div>
         </div>
         <div class="kpi-card green">
             <div class="label">Claude AI 작업 성공률</div>
@@ -445,8 +441,8 @@
     </div>
 
     <!-- ==================== PLATFORM COMPARISON ==================== -->
-    <h2 class="section-title">플랫폼 비교: Claude AI vs 1P API</h2>
-    <p class="section-desc">소비자용(Claude AI)과 개발자용(1P API)의 사용 패턴 차이</p>
+    <h2 class="section-title">플랫폼 비교: Claude AI vs 개발자 API</h2>
+    <p class="section-desc">일반 사용자용(Claude AI)과 개발자용(API)의 사용 패턴 차이</p>
 
     <div class="chart-card full" style="overflow-x:auto; margin-bottom:24px;">
         <table class="compare-table">
@@ -454,7 +450,7 @@
                 <tr>
                     <th>지표</th>
                     <th><span class="platform-badge claude">Claude AI</span></th>
-                    <th><span class="platform-badge api">1P API</span></th>
+                    <th><span class="platform-badge api">개발자 API</span></th>
                     <th>해석</th>
                 </tr>
             </thead>
@@ -532,7 +528,7 @@
             <div class="chart-wrap"><canvas id="chartCollabClaude"></canvas></div>
         </div>
         <div class="chart-card">
-            <h3>1P API - 협업 패턴</h3>
+            <h3>개발자 API - 협업 패턴</h3>
             <p class="chart-desc">지시형(directive)이 압도적</p>
             <div class="chart-wrap"><canvas id="chartCollabAPI"></canvas></div>
         </div>
@@ -549,7 +545,7 @@
             <div class="chart-wrap"><canvas id="chartUseClaude"></canvas></div>
         </div>
         <div class="chart-card">
-            <h3>1P API - 사용 목적</h3>
+            <h3>개발자 API - 사용 목적</h3>
             <p class="chart-desc">업무 목적이 4분의 3을 차지</p>
             <div class="chart-wrap"><canvas id="chartUseAPI"></canvas></div>
         </div>
@@ -566,7 +562,7 @@
             <div class="chart-wrap bar-chart"><canvas id="chartAutoClaude"></canvas></div>
         </div>
         <div class="chart-card">
-            <h3>1P API - AI 자율성 분포</h3>
+            <h3>개발자 API - AI 자율성 분포</h3>
             <p class="chart-desc">점수 2~4에 고르게 분포</p>
             <div class="chart-wrap bar-chart"><canvas id="chartAutoAPI"></canvas></div>
         </div>
@@ -587,23 +583,23 @@
     </div>
 
     <div class="chart-card full" style="margin-top:20px;">
-        <h3>1P API - 요청 카테고리 Top 10 (Level 2)</h3>
+        <h3>개발자 API - 요청 카테고리 Top 10</h3>
         <p class="chart-desc">데이터 추출/구조화, 소프트웨어 개발 워크플로우, 코드 분석이 상위권</p>
         <div class="chart-wrap bar-chart" style="height:450px;"><canvas id="chartRequestAPI"></canvas></div>
     </div>
 
     <!-- ==================== O*NET TASKS ==================== -->
-    <h2 class="section-title">O*NET 직업 과업 매핑</h2>
-    <p class="section-desc">AI가 수행하는 작업을 미국 노동부 O*NET 직업 과업 분류에 매핑한 결과</p>
+    <h2 class="section-title">AI가 대신하는 직업별 주요 업무</h2>
+    <p class="section-desc">AI가 수행하는 작업을 미국 노동부의 직업 업무 분류(O*NET)에 매핑한 결과</p>
 
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('claude-onet')">Claude AI</button>
-        <button class="tab-btn" onclick="switchTab('api-onet')">1P API</button>
+        <button class="tab-btn" onclick="switchTab('api-onet')">개발자 API</button>
     </div>
 
     <div id="claude-onet" class="tab-content active">
         <div class="chart-card">
-            <h3>Claude AI - 상위 O*NET 과업</h3>
+            <h3>Claude AI - AI가 많이 수행하는 직업 업무 Top 10</h3>
             <p class="chart-desc">교육 보조, 코딩, 교육자료 개발이 상위권</p>
             <ol class="rank-list">
                 <li>
@@ -662,7 +658,7 @@
 
     <div id="api-onet" class="tab-content">
         <div class="chart-card">
-            <h3>1P API - 상위 O*NET 과업</h3>
+            <h3>개발자 API - AI가 많이 수행하는 직업 업무 Top 10</h3>
             <p class="chart-desc">데이터/ML, 소프트웨어 분석, 보안 분석이 상위권</p>
             <ol class="rank-list">
                 <li>
@@ -720,7 +716,7 @@
     </div>
 
     <div class="insight" style="margin-top:20px;">
-        <strong>O*NET 과업 비교:</strong> Claude AI의 1위 과업은 "학생 과제 지원"으로 교육 분야 활용이 두드러지는 반면, API의 1위는 "데이터 마이닝 및 ML 알고리즘"으로 기술 개발에 집중되어 있습니다. API에서는 전체 O*NET 과업이 2,253개로 매우 다양하게 분산되어 있어 not_classified(8.1%)를 제외하면 개별 과업 비중이 모두 2% 미만입니다.
+        <strong>직업 업무 비교:</strong> Claude AI의 1위 업무는 "학생 과제 지원"으로 교육 분야 활용이 두드러지는 반면, 개발자 API의 1위는 "데이터 마이닝 및 ML 알고리즘"으로 기술 개발에 집중되어 있습니다. 개발자 API에서는 전체 직업 업무가 2,253개로 매우 다양하게 분산되어 있어 미분류(8.1%)를 제외하면 개별 업무 비중이 모두 2% 미만입니다.
     </div>
 
     <!-- ==================== GLOBAL USAGE ==================== -->
@@ -741,7 +737,7 @@
     </div>
 
     <!-- ==================== SOUTH KOREA ==================== -->
-    <h2 class="section-title" style="background: linear-gradient(90deg, #6366f1, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">대한민국 심층 분석</h2>
+    <h2 class="section-title" style="background: linear-gradient(90deg, #c96442, #d4886c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">대한민국 심층 분석</h2>
     <p class="section-desc">한국 사용자(전체의 3.06%, 30,618건)의 Claude AI 사용 패턴 분석</p>
 
     <div class="kpi-grid">
@@ -886,7 +882,7 @@
             <div class="chart-wrap bar-chart"><canvas id="chartEduClaude"></canvas></div>
         </div>
         <div class="chart-card">
-            <h3>1P API - 교육 연수 비교</h3>
+            <h3>개발자 API - 교육 연수 비교</h3>
             <p class="chart-desc">API 작업은 인간 기준 12.7년, AI 기준 11.9년</p>
             <div class="chart-wrap bar-chart"><canvas id="chartEduAPI"></canvas></div>
         </div>
@@ -927,7 +923,7 @@
             <div>
                 <h3 style="color:var(--green); margin-bottom:8px;">2. 교육 분야의 높은 활용</h3>
                 <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.7;">
-                    Claude AI 사용의 19.3%가 학습 목적이며, O*NET 과업 1위가 "학생 과제 지원". AI가 교육 보조 도구로 자리잡고 있습니다.
+                    Claude AI 사용의 19.3%가 학습 목적이며, AI가 가장 많이 수행하는 직업 업무 1위가 "학생 과제 지원"입니다. AI가 교육 보조 도구로 자리잡고 있습니다.
                 </p>
             </div>
             <div>
@@ -949,7 +945,7 @@
                 </p>
             </div>
             <div>
-                <h3 style="color:#a78bfa; margin-bottom:8px;">6. 학사 수준의 작업 처리</h3>
+                <h3 style="color:#7a6b9a; margin-bottom:8px;">6. 학사 수준의 작업 처리</h3>
                 <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.7;">
                     AI 교육연수 평균 약 12년(학사 수준). 두 플랫폼 모두 대학 학부 수준의 전문성이 필요한 작업을 주로 처리하고 있습니다.
                 </p>
@@ -985,29 +981,29 @@
 
 <script>
 // Chart.js defaults
-Chart.defaults.color = '#8888a0';
-Chart.defaults.borderColor = 'rgba(42, 42, 58, 0.5)';
+Chart.defaults.color = '#6b6560';
+Chart.defaults.borderColor = 'rgba(0, 0, 0, 0.08)';
 Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif";
 
 const COLORS = {
-    purple: '#6366f1',
-    violet: '#8b5cf6',
-    pink: '#ec4899',
-    green: '#22c55e',
-    amber: '#f59e0b',
-    cyan: '#06b6d4',
-    red: '#ef4444',
-    blue: '#3b82f6',
-    indigo: '#818cf8',
-    teal: '#14b8a6',
-    orange: '#f97316',
-    lime: '#84cc16',
-    rose: '#f43f5e',
-    sky: '#38bdf8',
-    fuchsia: '#d946ef'
+    purple: '#c96442',
+    violet: '#b8533a',
+    pink: '#d4886c',
+    green: '#2e8b57',
+    amber: '#c68a1d',
+    cyan: '#3a7ca5',
+    red: '#c44040',
+    blue: '#4a7fb5',
+    indigo: '#7a6b9a',
+    teal: '#3a8a7a',
+    orange: '#d47a3a',
+    lime: '#6a9a3a',
+    rose: '#c45a6a',
+    sky: '#5a9ab5',
+    fuchsia: '#9a5ab5'
 };
 
-const palette = ['#6366f1','#8b5cf6','#ec4899','#06b6d4','#22c55e','#f59e0b','#3b82f6','#f97316','#14b8a6','#84cc16','#f43f5e','#38bdf8','#d946ef','#818cf8','#ef4444'];
+const palette = ['#c96442','#3a7ca5','#2e8b57','#c68a1d','#7a6b9a','#d4886c','#4a7fb5','#d47a3a','#3a8a7a','#6a9a3a','#c45a6a','#5a9ab5','#9a5ab5','#b8533a','#c44040'];
 
 function doughnutOpts() {
     return {
@@ -1015,7 +1011,7 @@ function doughnutOpts() {
         maintainAspectRatio: true,
         aspectRatio: 1,
         plugins: {
-            legend: { position: 'bottom', labels: { padding: 12, usePointStyle: true, pointStyleWidth: 10 } }
+            legend: { position: 'bottom', labels: { padding: 14, usePointStyle: true, pointStyle: 'circle', boxWidth: 8, boxHeight: 8, font: { size: 12 } } }
         },
         layout: { padding: 0 }
     };
@@ -1084,7 +1080,7 @@ function autoChart(id, data, color) {
             datasets: [{
                 data: data,
                 backgroundColor: data.map((_, i) => {
-                    const colors = ['#ef4444', '#f59e0b', '#22c55e', '#6366f1', '#8b5cf6'];
+                    const colors = ['#c44040', '#c68a1d', '#2e8b57', '#c96442', '#b8533a'];
                     return colors[i] + 'cc';
                 }),
                 borderRadius: 6,
@@ -1096,7 +1092,7 @@ function autoChart(id, data, color) {
             maintainAspectRatio: true,
             plugins: { legend: { display: false } },
             scales: {
-                y: { beginAtZero: true, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(42,42,58,0.3)' } },
+                y: { beginAtZero: true, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(0,0,0,0.06)' } },
                 x: { grid: { display: false } }
             }
         }
@@ -1140,7 +1136,7 @@ new Chart(document.getElementById('chartRequestClaude'), {
         maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: {
-            x: { beginAtZero: true, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(42,42,58,0.3)' } },
+            x: { beginAtZero: true, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(0,0,0,0.06)' } },
             y: { grid: { display: false }, ticks: { font: { size: 12 } } }
         }
     }
@@ -1174,7 +1170,7 @@ new Chart(document.getElementById('chartRequestAPI'), {
         maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: {
-            x: { beginAtZero: true, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(42,42,58,0.3)' } },
+            x: { beginAtZero: true, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(0,0,0,0.06)' } },
             y: { grid: { display: false }, ticks: { font: { size: 12 } } }
         }
     }
@@ -1198,7 +1194,7 @@ new Chart(document.getElementById('chartCountry'), {
         maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: {
-            x: { beginAtZero: true, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(42,42,58,0.3)' } },
+            x: { beginAtZero: true, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(0,0,0,0.06)' } },
             y: { grid: { display: false } }
         }
     }
@@ -1210,7 +1206,7 @@ new Chart(document.getElementById('chartCountryPie'), {
         labels: ['미국', '인도', '일본', '영국', '한국', '프랑스', '브라질', '독일', '인도네시아', '세이셸', '캐나다', '기타'],
         datasets: [{
             data: [21.97, 5.81, 3.12, 3.07, 3.06, 3.02, 2.76, 2.54, 2.51, 2.47, 2.29, 43.38],
-            backgroundColor: [...palette.slice(0, 11), '#333347'],
+            backgroundColor: [...palette.slice(0, 11), '#c5c0b8'],
             borderWidth: 0
         }]
     },
@@ -1219,7 +1215,7 @@ new Chart(document.getElementById('chartCountryPie'), {
         maintainAspectRatio: true,
         aspectRatio: 1.2,
         plugins: {
-            legend: { position: 'bottom', labels: { padding: 10, usePointStyle: true, pointStyleWidth: 10, font: { size: 11 } } }
+            legend: { position: 'bottom', labels: { padding: 10, usePointStyle: true, pointStyle: 'circle', boxWidth: 8, boxHeight: 8, font: { size: 11 } } }
         },
         layout: { padding: 0 }
     }
@@ -1285,7 +1281,7 @@ new Chart(document.getElementById('chartKRRequest'), {
         maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: {
-            x: { beginAtZero: true, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(42,42,58,0.3)' } },
+            x: { beginAtZero: true, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(0,0,0,0.06)' } },
             y: { grid: { display: false }, ticks: { font: { size: 12 } } }
         }
     }
@@ -1317,9 +1313,9 @@ function eduChart(id, humanData, aiData) {
         options: {
             responsive: true,
             maintainAspectRatio: true,
-            plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, pointStyleWidth: 10 } } },
+            plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'circle', boxWidth: 8, boxHeight: 8 } } },
             scales: {
-                y: { beginAtZero: true, max: 16, ticks: { callback: v => v + '년' }, grid: { color: 'rgba(42,42,58,0.3)' } },
+                y: { beginAtZero: true, max: 16, ticks: { callback: v => v + '년' }, grid: { color: 'rgba(0,0,0,0.06)' } },
                 x: { grid: { display: false } }
             }
         }
@@ -1333,7 +1329,7 @@ eduChart('chartEduAPI', [12.71, 14.0], [11.91, 12.0]);
 new Chart(document.getElementById('chartSuccess'), {
     type: 'bar',
     data: {
-        labels: ['Claude AI', '1P API'],
+        labels: ['Claude AI', '개발자 API'],
         datasets: [
             {
                 label: '성공 (Yes)',
@@ -1354,9 +1350,9 @@ new Chart(document.getElementById('chartSuccess'), {
     options: {
         responsive: true,
         maintainAspectRatio: true,
-        plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, pointStyleWidth: 10 } } },
+        plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'circle', boxWidth: 8, boxHeight: 8 } } },
         scales: {
-            y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' }, stacked: true, grid: { color: 'rgba(42,42,58,0.3)' } },
+            y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' }, stacked: true, grid: { color: 'rgba(0,0,0,0.06)' } },
             x: { stacked: true, grid: { display: false } }
         }
     }
@@ -1365,7 +1361,7 @@ new Chart(document.getElementById('chartSuccess'), {
 new Chart(document.getElementById('chartHumanAbility'), {
     type: 'bar',
     data: {
-        labels: ['Claude AI', '1P API'],
+        labels: ['Claude AI', '개발자 API'],
         datasets: [
             {
                 label: '인간 단독 가능 (Yes)',
@@ -1386,9 +1382,9 @@ new Chart(document.getElementById('chartHumanAbility'), {
     options: {
         responsive: true,
         maintainAspectRatio: true,
-        plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, pointStyleWidth: 10 } } },
+        plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'circle', boxWidth: 8, boxHeight: 8 } } },
         scales: {
-            y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' }, stacked: true, grid: { color: 'rgba(42,42,58,0.3)' } },
+            y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' }, stacked: true, grid: { color: 'rgba(0,0,0,0.06)' } },
             x: { stacked: true, grid: { display: false } }
         }
     }
